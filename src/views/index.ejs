@@ -29,28 +29,31 @@
 <body>
     <div class="container mt-5">
         <h1>Gallery</h1>
-        <div class="row" id="gallery">
-            <% for (let i = 1; i < 12; i++) { %>
+        <% if (photos.length === 0) { %>
+        <p>No photos found.</p>
+        <% } else { %>
+        <div class="row">
+            <% photos.forEach(photo => { %>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Image <%= i %>">
+                    <img src="/images/uploads/<%= photo.path %>" class="card-img-top" alt="<%= photo.title %>"style="height:250px; width:258px;">
                     <div class="card-body">
-                        <h5 class="card-title">Image <%= i %></h5>
+                        <h5 class="card-title"><%= photo.title %></h5>
                     </div>
                 </div>
             </div>
-            <% } %>
+            <% }) %> <% } %>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4" id="addButtonCard">
                 <div class="card">
                     <div class="card-body">
-                        <form id="addPhotoForm">
+                        <form id="addPhotoForm" enctype="multipart/form-data" action="/upload" method="post">
                             <div class="form-group">
                                 <label for="title">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" required>
                             </div>
                             <div class="form-group">
-                                <label for="file">Upload File</label>
-                                <input type="file" class="form-control-file" id="file" name="file" accept="image/*" required>
+                                <label for="image">Upload File</label>
+                                <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required>
                             </div>
                         </form>
                     </div>
